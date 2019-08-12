@@ -5,10 +5,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 import java.util.function.Consumer;
 
 /**
@@ -16,11 +13,10 @@ import java.util.function.Consumer;
  *
  * @see GUI
  */
-@SuppressWarnings({ "unused", "WeakerAccess" })
+@SuppressWarnings("unused")
 public class ScrollableGUI {
 
     private final List<GUI> pages;
-    private final Map<UUID, Integer> indexes = new HashMap<>();
 
     /**
      * Constructs a new {@code ScrollableGUI}.
@@ -48,23 +44,11 @@ public class ScrollableGUI {
     }
 
     /**
-     * Returns a map that pairs the UUID of each player currently interacting
-     * with the GUI, with the index of the page of the GUI that the player is
-     * currently viewing.
-     *
-     * @return the index of the page of the GUI that each player is viewing
-     */
-    public Map<UUID, Integer> getIndexes() {
-        return indexes;
-    }
-
-    /**
      * Opens the first page of the GUI to the given player.
      *
      * @param player the player to open the first page of the GUI to
      */
     public void openTo(Player player) {
-        this.indexes.put(player.getUniqueId(), 0);
         this.pages.get(0).openTo(player);
     }
 
@@ -81,11 +65,6 @@ public class ScrollableGUI {
         }
     }
 
-    private void takePlayerToPage(Player player, int pageIndex) {
-        this.indexes.replace(player.getUniqueId(), pageIndex);
-        this.pages.get(pageIndex).openTo(player);
-    }
-
     /**
      * Sets a navigation button on the GUI, to allow players to scroll between
      * the GUI's pages.
@@ -98,27 +77,27 @@ public class ScrollableGUI {
         if (type == NavigationButtonType.FIRST_PAGE) {
             for (int i = 2; i < this.pages.size(); i++) {
                 this.pages.get(i).setButton(slot, item, event ->
-                    this.takePlayerToPage((Player) event.getWhoClicked(), 0)
+                    this.pages.get(0).openTo((Player) event.getWhoClicked())
                 );
             }
         } else if (type == NavigationButtonType.PREVIOUS_PAGE) {
             for (int i = 1; i < this.pages.size(); i++) {
-                this.pages.get(i).setButton(slot, item, event -> {
-                    int newPageIndex = this.indexes.get(event.getWhoClicked().getUniqueId()) - 1;
-                    this.takePlayerToPage((Player) event.getWhoClicked(), newPageIndex);
-                });
+                int previousPageIndex = i - 1;
+                this.pages.get(i).setButton(slot, item, event ->
+                    this.pages.get(previousPageIndex).openTo((Player) event.getWhoClicked())
+                );
             }
         } else if (type == NavigationButtonType.NEXT_PAGE) {
             for (int i = 0; i < this.pages.size() - 1; i++) {
-                this.pages.get(i).setButton(slot, item, event -> {
-                    int newPageIndex = this.indexes.get(event.getWhoClicked().getUniqueId()) + 1;
-                    this.takePlayerToPage((Player) event.getWhoClicked(), newPageIndex);
-                });
+                int nextPageIndex = i + 1;
+                this.pages.get(i).setButton(slot, item, event ->
+                    this.pages.get(nextPageIndex).openTo((Player) event.getWhoClicked())
+                );
             }
         } else if (type == NavigationButtonType.LAST_PAGE) {
             for (int i = 0; i < this.pages.size() - 2; i++) {
                 this.pages.get(i).setButton(slot, item, event ->
-                    this.takePlayerToPage((Player) event.getWhoClicked(), this.pages.size() - 1)
+                    this.pages.get(this.pages.size() - 1).openTo((Player) event.getWhoClicked())
                 );
             }
         }

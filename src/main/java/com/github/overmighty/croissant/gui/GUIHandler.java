@@ -5,7 +5,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 
@@ -58,19 +57,6 @@ public class GUIHandler implements Listener {
         if (!gui.getUnhandledSlots().containsAll(event.getInventorySlots())) {
             // Do not let players alter the contents of handled slots of the GUI
             event.setCancelled(true);
-        }
-    }
-
-    @EventHandler
-    public void onInventoryClose(InventoryCloseEvent event) {
-        if (!(event.getInventory().getHolder() instanceof GUI)) {
-            return;
-        }
-
-        GUI gui = (GUI) event.getInventory().getHolder();
-
-        if (gui.getScrollableGUI() != null) {
-            gui.getScrollableGUI().getIndexes().remove(event.getPlayer().getUniqueId());
         }
     }
 
