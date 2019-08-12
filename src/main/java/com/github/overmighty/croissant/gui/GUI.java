@@ -31,7 +31,6 @@ public class GUI implements InventoryHolder, Listener {
     private final Inventory inventory;
     private final Set<Integer> unhandledSlots = new HashSet<>();
     private final Map<Integer, Consumer<InventoryClickEvent>> clickHandlers = new HashMap<>();
-    private ScrollableGUI scrollableGUI;
 
     /**
      * Constructs a new {@code GUI}.
@@ -73,27 +72,6 @@ public class GUI implements InventoryHolder, Listener {
      */
     public Map<Integer, Consumer<InventoryClickEvent>> getClickHandlers() {
         return clickHandlers;
-    }
-
-    /**
-     * Returns the {@link ScrollableGUI} of which this {@code GUI} is a page.
-     *
-     * @return the {@link ScrollableGUI} of which this GUI is a page, or
-     *         {@code null} if this GUI is not one of the pages of a
-     *         {@link ScrollableGUI}
-     */
-    public ScrollableGUI getScrollableGUI() {
-        return scrollableGUI;
-    }
-
-    /**
-     * Sets the {@link ScrollableGUI} of which this {@code GUI} is a page.
-     *
-     * @param scrollableGUI the {@link ScrollableGUI} of which this GUI is a
-     *                      page
-     */
-    public void setScrollableGUI(ScrollableGUI scrollableGUI) {
-        this.scrollableGUI = scrollableGUI;
     }
 
     /**
