@@ -266,6 +266,10 @@ public class CroissantCommand extends Command implements PluginIdentifiableComma
 
         for (int i = 0; !args.isEmpty(); i++) {
             array[i] = (T) this.callArgumentResolver(sender, alias, argType, args.pop());
+
+            if (array[i] == null) {
+                return null;
+            }
         }
 
         return array;
