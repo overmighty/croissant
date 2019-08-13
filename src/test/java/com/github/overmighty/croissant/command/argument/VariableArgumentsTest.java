@@ -8,7 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -19,11 +19,11 @@ class VariableArgumentsTest extends TestCommand {
     }
 
     @CommandExecutor
-    void run(CommandSender sender, String... args) {
+    void run(CommandSender sender, Boolean... args) {
         super.parsedArgs = args;
     }
 
-    @ParameterizedTest(name = "Test the parsing of variable arguments ({index}/4)")
+    @ParameterizedTest(name = "Test the parsing of variable arguments ({index}/5)")
     @MethodSource
     void testVariableArgumentsParsing(String[] args, Object[] expected) {
         super.execute(args);
@@ -38,16 +38,20 @@ class VariableArgumentsTest extends TestCommand {
                 null
             ),
             Arguments.arguments(
-                new String[] { "test" },
-                new String[] { "test" }
+                new String[] { "abc" },
+                null
             ),
             Arguments.arguments(
-                new String[] { "test1", "test2" },
-                new String[] { "test1", "test2" }
+                new String[] { "true" },
+                new Object[] { true }
             ),
             Arguments.arguments(
-                new String[] { "test1", "test2", "test3" },
-                new String[] { "test1", "test2", "test3" }
+                new String[] { "true", "false", "true" },
+                new Object[] { true, false, true }
+            ),
+            Arguments.arguments(
+                new String[] { "true", "false", "true", "abc" },
+                null
             )
         );
     }
@@ -63,15 +67,15 @@ class VariableArgumentsTest extends TestCommand {
         return Stream.of(
             Arguments.arguments(
                 new String[] { "" },
-                Collections.singletonList("OverMighty")
+                Arrays.asList("true", "false")
             ),
             Arguments.arguments(
-                new String[] { "test1", "" },
-                Collections.singletonList("OverMighty")
+                new String[] { "true", "" },
+                Arrays.asList("true", "false")
             ),
             Arguments.arguments(
-                new String[] { "test1", "test2", "" },
-                Collections.singletonList("OverMighty")
+                new String[] { "true", "false", "" },
+                Arrays.asList("true", "false")
             )
         );
     }
