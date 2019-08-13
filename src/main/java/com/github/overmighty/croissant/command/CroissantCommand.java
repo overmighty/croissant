@@ -244,12 +244,28 @@ public class CroissantCommand extends Command implements PluginIdentifiableComma
         return argType;
     }
 
+    private Object callArgumentResolver(CommandSender sender, String alias, ArgumentType argType,
+                                        String value) {
+        Object resolved = argType.getResolver().resolve(value);
+
+        if (resolved == null) {
+            if (argType.getErrorMessage() != null) {
+                sender.sendMessage(argType.getErrorMessage().replace("{value}", value));
+            } else {
+                this.sendUsage(sender, alias);
+            }
+        }
+
+        return resolved;
+    }
+
     @SuppressWarnings("unchecked")
-    private <T> T[] resolveVarArgs(Class<T> paramType, ArgumentType argType, Deque<String> args) {
+    private <T> T[] resolveVarArgs(CommandSender sender, String alias, Class<T> paramType,
+                                   ArgumentType argType, Deque<String> args) {
         T[] array = (T[]) Array.newInstance(Primitives.wrap(paramType), args.size());
 
         for (int i = 0; !args.isEmpty(); i++) {
-            array[i] = (T) argType.getResolver().resolve(args.pop());
+            array[i] = (T) this.callArgumentResolver(sender, alias, argType, args.pop());
         }
 
         return array;
@@ -273,19 +289,11 @@ public class CroissantCommand extends Command implements PluginIdentifiableComma
         Object resolved;
 
         if (param.isVarArgs()) {
-            resolved = this.resolveVarArgs(paramType, argType, args);
+            resolved = this.resolveVarArgs(sender, alias, paramType, argType, args);
         } else if (paramType == String.class && param.isAnnotationPresent(Rest.class)) {
             resolved = this.resolveRestToString(args);
         } else {
-            resolved = argType.getResolver().resolve(args.pop());
-        }
-
-        if (resolved == null) {
-            if (argType.getErrorMessage() != null) {
-                sender.sendMessage(argType.getErrorMessage());
-            } else {
-                this.sendUsage(sender, alias);
-            }
+            resolved = this.callArgumentResolver(sender, alias, argType, args.pop());
         }
 
         return resolved;
