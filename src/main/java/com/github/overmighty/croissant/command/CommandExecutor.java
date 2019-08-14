@@ -17,7 +17,9 @@ import java.lang.annotation.Target;
  * framework, based on the types and annotations of those extra parameters, and
  * on the {@link com.github.overmighty.croissant.command.argument.ArgumentType}
  * that the command's {@link CommandHandler} binds to the type of each one of
- * those parameters (see {@link CommandHandler#getArgumentTypes()}).
+ * those parameters (see {@link CommandHandler#getArgumentTypes()}). If a
+ * parameter is of a primitive type, the {@code ArgumentType} bound to the
+ * wrapper class for that type will be retrieved.
  * <p>
  * By default, arguments are required, which means that if they are not provided
  * when calling the command, the command's usage message is sent to the command
@@ -29,6 +31,11 @@ import java.lang.annotation.Target;
  * Executor methods may also take varargs. In this case, each remaining argument
  * provided by the command sender will be resolved into the varargs parameter's
  * component type and put into an array, which will be passed to the method.
+ * However, the varargs parameter must not be of a primitive component type, or
+ * runtime exceptions will occur when executing the command. If one of those
+ * types is wanted, the wrapper class for it, for example {@link Boolean} for
+ * {@code boolean}, {@link Integer} for {@code int}, or {@link Double} for
+ * {@code double}, must be used.
  *
  * @see CroissantCommand
  */
