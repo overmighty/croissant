@@ -18,7 +18,6 @@ import java.util.function.Consumer;
 public class ItemBuilder {
 
     private final ItemStack item;
-    private final ItemMeta meta;
 
     /**
      * Constructs a new {@code ItemBuilder} with an item stack containing 1
@@ -28,16 +27,14 @@ public class ItemBuilder {
      */
     public ItemBuilder(Material material) {
         this.item = new ItemStack(material);
-        this.meta = item.getItemMeta();
     }
 
     /**
-     * Returns the built item stack, after updating its meta data.
+     * Returns the built item stack.
      *
      * @return the built item stack
      */
     public ItemStack getItemStack() {
-        this.item.setItemMeta(meta);
         return this.item;
     }
 
@@ -48,7 +45,9 @@ public class ItemBuilder {
      * @return this {@code ItemBuilder}, for chaining
      */
     public ItemBuilder manipulateMeta(Consumer<ItemMeta> consumer) {
-        consumer.accept(this.meta);
+        ItemMeta itemMeta = this.item.getItemMeta();
+        consumer.accept(itemMeta);
+        this.item.setItemMeta(itemMeta);
         return this;
     }
 
@@ -84,7 +83,9 @@ public class ItemBuilder {
      * @return this {@code ItemBuilder}, for chaining
      */
     public ItemBuilder setDisplayName(String displayName) {
-        this.meta.setDisplayName(ChatColor.RESET + displayName);
+        ItemMeta itemMeta = this.item.getItemMeta();
+        itemMeta.setDisplayName(ChatColor.RESET + displayName);
+        this.item.setItemMeta(itemMeta);
         return this;
     }
 
@@ -96,7 +97,9 @@ public class ItemBuilder {
      * @return this {@code ItemBuilder}, for chaining
      */
     public ItemBuilder setLore(String... lore) {
-        this.meta.setLore(Arrays.asList(lore));
+        ItemMeta itemMeta = this.item.getItemMeta();
+        itemMeta.setLore(Arrays.asList(lore));
+        this.item.setItemMeta(itemMeta);
         return this;
     }
 
@@ -144,7 +147,9 @@ public class ItemBuilder {
      * @return this {@code ItemBuilder}, for chaining
      */
     public ItemBuilder addItemFlags(ItemFlag... flags) {
-        this.meta.addItemFlags(flags);
+        ItemMeta itemMeta = this.item.getItemMeta();
+        itemMeta.addItemFlags(flags);
+        this.item.setItemMeta(itemMeta);
         return this;
     }
 
@@ -155,7 +160,9 @@ public class ItemBuilder {
      * @return this {@code ItemBuilder}, for chaining
      */
     public ItemBuilder removeItemFlags(ItemFlag... flags) {
-        this.meta.removeItemFlags(flags);
+        ItemMeta itemMeta = this.item.getItemMeta();
+        itemMeta.removeItemFlags(flags);
+        this.item.setItemMeta(itemMeta);
         return this;
     }
 
