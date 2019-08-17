@@ -1,9 +1,10 @@
 package com.github.overmighty.croissant.command.argument;
 
 /**
- * Resolves raw command arguments of a certain expected type, into appropriate
+ * Resolves raw command arguments of a certain expected type into appropriate
  * objects.
  *
+ * @param <T> the type of objects to resolve raw command arguments into
  * @see ArgumentType
  */
 public interface ArgumentResolver<T> {
