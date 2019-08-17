@@ -211,6 +211,18 @@ public class CroissantCommand extends Command implements PluginIdentifiableComma
     }
 
     /**
+     * Returns the command's usage message, with the given command alias instead
+     * of {@code <command>}.
+     *
+     * @param alias the alias to replace {@code <command>} with
+     * @return the command's usage message
+     */
+    @SuppressWarnings("WeakerAccess")
+    public String getUsage(String alias) {
+        return super.usageMessage.replace("<command>", alias);
+    }
+
+    /**
      * Sends the command's usage message to a {@link CommandSender}, with the
      * usage message prefix of the command's handler.
      *
@@ -221,8 +233,7 @@ public class CroissantCommand extends Command implements PluginIdentifiableComma
     @SuppressWarnings("WeakerAccess")
     public void sendUsage(CommandSender sender, String alias) {
         if (super.usageMessage.length() > 0) {
-            sender.sendMessage(this.handler.getUsageMessagePrefix() +
-                super.usageMessage.replace("<command>", alias));
+            sender.sendMessage(this.handler.getUsageMessagePrefix() + this.getUsage(alias));
         }
     }
 
