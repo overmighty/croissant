@@ -63,7 +63,6 @@ public class ArgumentType {
      *
      * @return the type's error message; can be {@code null}
      */
-    @SuppressWarnings("unused")
     public String getErrorMessage() {
         return errorMessage;
     }
