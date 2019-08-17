@@ -39,12 +39,12 @@ public class ItemBuilder {
     }
 
     /**
-     * Lets you manipulate the item stack's meta data with a {@link Consumer}.
+     * Lets you handle the item stack's meta data with a {@link Consumer}.
      *
-     * @param consumer the consumer to do an operation on the meta data
+     * @param consumer the {@code Consumer} to handle the meta data
      * @return this {@code ItemBuilder}, for chaining
      */
-    public ItemBuilder manipulateMeta(Consumer<ItemMeta> consumer) {
+    public ItemBuilder handleMeta(Consumer<ItemMeta> consumer) {
         ItemMeta itemMeta = this.item.getItemMeta();
         consumer.accept(itemMeta);
         this.item.setItemMeta(itemMeta);
