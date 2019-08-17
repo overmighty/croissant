@@ -34,7 +34,7 @@ public class ItemBuilder {
      *
      * @return the built item stack
      */
-    public ItemStack getItemStack() {
+    public ItemStack build() {
         return this.item;
     }
 
