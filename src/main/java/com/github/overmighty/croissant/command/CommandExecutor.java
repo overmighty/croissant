@@ -10,16 +10,17 @@ import java.lang.annotation.Target;
  * command class's executor method, which is called to execute the command.
  * <p>
  * A command class's executor method must take at least one parameter, which
- * must be of the {@link org.bukkit.command.CommandSender} type, as that
- * parameter will represent the {@code CommandSender} that issued the command
- * call. The method can take extra parameters, which will be treated as command
- * arguments: argument parsing and tab-completion will be managed by the command
- * framework, based on the types and annotations of those extra parameters, and
- * on the {@link com.github.overmighty.croissant.command.argument.ArgumentType}
- * that the command's {@link CommandHandler} binds to the type of each one of
- * those parameters (see {@link CommandHandler#getArgumentTypes()}). If a
- * parameter is of a primitive type, the {@code ArgumentType} bound to the
- * wrapper class for that type will be retrieved.
+ * is the {@link org.bukkit.command.CommandSender} that issued the command call.
+ * If the command is player-only, the parameter may be of the
+ * {@link org.bukkit.entity.Player} type to avoid casts, for example. The method
+ * can take extra parameters, which will be treated as command arguments:
+ * argument parsing and tab-completion will be managed by the command framework,
+ * based on the types and annotations of those extra parameters, and on the
+ * {@link com.github.overmighty.croissant.command.argument.ArgumentType} that
+ * the command's {@link CommandHandler} binds to the type of each one of those
+ * parameters (see {@link CommandHandler#getArgumentTypes()}). If a parameter is
+ * of a primitive type, the {@code ArgumentType} bound to the wrapper class for
+ * that type will be retrieved.
  * <p>
  * By default, arguments are required, which means that if they are not provided
  * when calling the command, the command's usage message is sent to the command
