@@ -102,6 +102,19 @@ public class CommandHandler implements Listener {
     }
 
     /**
+     * Returns {@code true} if {@link BuiltInArgumentType#PLAYER}'s
+     * {@code ArgumentCompleter} is enabled for commands that are handled by
+     * this command handler, and {@code false} otherwise.
+     *
+     * @return if {@link BuiltInArgumentType#PLAYER}'s {@code ArgumentCompleter}
+     *         is enabled for commands that are handled by this command handler
+     */
+    @SuppressWarnings("WeakerAccess")
+    public boolean isPlayerCompleterEnabled() {
+        return playerCompleterEnabled;
+    }
+
+    /**
      * Sets if {@link BuiltInArgumentType#PLAYER}'s {@code ArgumentCompleter}
      * is enabled for commands that are handled by this command handler or not.
      * Setting this property to {@code false} will also disable tab-completion
@@ -118,19 +131,6 @@ public class CommandHandler implements Listener {
     @SuppressWarnings("unused")
     public void setPlayerCompleterEnabled(boolean playerCompleterEnabled) {
         this.playerCompleterEnabled = playerCompleterEnabled;
-    }
-
-    /**
-     * Returns {@code true} if {@link BuiltInArgumentType#PLAYER}'s
-     * {@code ArgumentCompleter} is enabled for commands that are handled by
-     * this command handler, and {@code false} otherwise.
-     *
-     * @return if {@link BuiltInArgumentType#PLAYER}'s {@code ArgumentCompleter}
-     *         is enabled for commands that are handled by this command handler
-     */
-    @SuppressWarnings("WeakerAccess")
-    public boolean isPlayerCompleterEnabled() {
-        return playerCompleterEnabled;
     }
 
     /**
