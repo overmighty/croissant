@@ -18,6 +18,7 @@ import java.util.function.Consumer;
 public class ScrollableGUI {
 
     private final List<GUI> pages;
+    private Consumer<InventoryClickEvent> scrollHandler;
 
     /**
      * Constructs a new {@code ScrollableGUI}.
@@ -42,6 +43,26 @@ public class ScrollableGUI {
      */
     public List<GUI> getPages() {
         return pages;
+    }
+
+    /**
+     * Returns the click handler that is called when one of the GUI's navigation
+     * buttons is clicked.
+     *
+     * @return the GUI's scroll handler
+     */
+    public Consumer<InventoryClickEvent> getScrollHandler() {
+        return scrollHandler;
+    }
+
+    /**
+     * Sets the click handler to call when one of the GUI's navigation buttons
+     * is clicked.
+     *
+     * @param scrollHandler the GUI's scroll handler
+     */
+    public void setScrollHandler(Consumer<InventoryClickEvent> scrollHandler) {
+        this.scrollHandler = scrollHandler;
     }
 
     /**
@@ -76,6 +97,16 @@ public class ScrollableGUI {
         return navigationItem;
     }
 
+    private Consumer<InventoryClickEvent> makeNavigationHandler(int pageIndex) {
+        return event -> {
+            this.pages.get(pageIndex).openTo((Player) event.getWhoClicked());
+
+            if (this.scrollHandler != null) {
+                this.scrollHandler.accept(event);
+            }
+        };
+    }
+
     /**
      * Sets a navigation button on the GUI, to allow players to scroll between
      * the GUI's pages. For each page of the GUI, {@code {page}} in the item
@@ -90,31 +121,29 @@ public class ScrollableGUI {
         if (type == NavigationButtonType.FIRST_PAGE) {
             for (int i = 2; i < this.pages.size(); i++) {
                 ItemStack navigationItem = this.makeNavigationItem(item, 0);
-                this.pages.get(i).setButton(slot, navigationItem, event ->
-                    this.pages.get(0).openTo((Player) event.getWhoClicked())
-                );
+                this.pages.get(i).setButton(slot, navigationItem, this.makeNavigationHandler(0));
             }
         } else if (type == NavigationButtonType.PREVIOUS_PAGE) {
             for (int i = 1; i < this.pages.size(); i++) {
                 int previousPageIndex = i - 1;
                 ItemStack navigationItem = this.makeNavigationItem(item, previousPageIndex);
-                this.pages.get(i).setButton(slot, navigationItem, event ->
-                    this.pages.get(previousPageIndex).openTo((Player) event.getWhoClicked())
+                this.pages.get(i).setButton(
+                    slot, navigationItem, this.makeNavigationHandler(previousPageIndex)
                 );
             }
         } else if (type == NavigationButtonType.NEXT_PAGE) {
             for (int i = 0; i < this.pages.size() - 1; i++) {
                 int nextPageIndex = i + 1;
                 ItemStack navigationItem = this.makeNavigationItem(item, nextPageIndex);
-                this.pages.get(i).setButton(slot, navigationItem, event ->
-                    this.pages.get(nextPageIndex).openTo((Player) event.getWhoClicked())
+                this.pages.get(i).setButton(
+                    slot, navigationItem, this.makeNavigationHandler(nextPageIndex)
                 );
             }
         } else if (type == NavigationButtonType.LAST_PAGE) {
             for (int i = 0; i < this.pages.size() - 2; i++) {
                 ItemStack navigationItem = this.makeNavigationItem(item, this.pages.size() - 1);
-                this.pages.get(i).setButton(slot, navigationItem, event ->
-                    this.pages.get(this.pages.size() - 1).openTo((Player) event.getWhoClicked())
+                this.pages.get(i).setButton(
+                    slot, navigationItem, this.makeNavigationHandler(this.pages.size() - 1)
                 );
             }
         }
