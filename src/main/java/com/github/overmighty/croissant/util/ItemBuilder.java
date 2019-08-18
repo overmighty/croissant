@@ -1,5 +1,6 @@
 package com.github.overmighty.croissant.util;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -44,6 +45,7 @@ public class ItemBuilder {
      * @param consumer the {@code Consumer} to handle the meta data
      * @return this {@code ItemBuilder}, for chaining
      */
+    @SuppressWarnings({ "WeakerAccess", "UnusedReturnValue" })
     public ItemBuilder handleMeta(Consumer<ItemMeta> consumer) {
         ItemMeta itemMeta = this.item.getItemMeta();
         consumer.accept(itemMeta);
@@ -83,9 +85,7 @@ public class ItemBuilder {
      * @return this {@code ItemBuilder}, for chaining
      */
     public ItemBuilder setDisplayName(String displayName) {
-        ItemMeta itemMeta = this.item.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.RESET + displayName);
-        this.item.setItemMeta(itemMeta);
+        this.handleMeta(meta -> meta.setDisplayName(ChatColor.RESET + displayName));
         return this;
     }
 
@@ -97,9 +97,7 @@ public class ItemBuilder {
      * @return this {@code ItemBuilder}, for chaining
      */
     public ItemBuilder setLore(String... lore) {
-        ItemMeta itemMeta = this.item.getItemMeta();
-        itemMeta.setLore(Arrays.asList(lore));
-        this.item.setItemMeta(itemMeta);
+        this.handleMeta(meta -> meta.setLore(Arrays.asList(lore)));
         return this;
     }
 
@@ -147,9 +145,7 @@ public class ItemBuilder {
      * @return this {@code ItemBuilder}, for chaining
      */
     public ItemBuilder addItemFlags(ItemFlag... flags) {
-        ItemMeta itemMeta = this.item.getItemMeta();
-        itemMeta.addItemFlags(flags);
-        this.item.setItemMeta(itemMeta);
+        this.handleMeta(meta -> meta.addItemFlags(flags));
         return this;
     }
 
@@ -160,9 +156,7 @@ public class ItemBuilder {
      * @return this {@code ItemBuilder}, for chaining
      */
     public ItemBuilder removeItemFlags(ItemFlag... flags) {
-        ItemMeta itemMeta = this.item.getItemMeta();
-        itemMeta.removeItemFlags(flags);
-        this.item.setItemMeta(itemMeta);
+        this.handleMeta(meta -> meta.removeItemFlags(flags));
         return this;
     }
 
