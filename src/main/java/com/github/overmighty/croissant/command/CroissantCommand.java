@@ -2,6 +2,7 @@ package com.github.overmighty.croissant.command;
 
 import com.github.overmighty.croissant.Croissant;
 import com.github.overmighty.croissant.command.argument.ArgumentCompleter;
+import com.github.overmighty.croissant.command.argument.ArgumentResolver;
 import com.github.overmighty.croissant.command.argument.ArgumentType;
 import com.github.overmighty.croissant.command.argument.BuiltInArgumentType;
 import com.github.overmighty.croissant.command.argument.Default;
@@ -255,43 +256,29 @@ public class CroissantCommand extends Command implements PluginIdentifiableComma
         return argType;
     }
 
-    private Object callArgumentResolver(CommandSender sender, String alias, ArgumentType argType,
-                                        String value) {
-        Object resolved = argType.getResolver().resolve(value);
-
-        if (resolved == null) {
-            if (argType.getErrorMessage() != null) {
-                sender.sendMessage(argType.getErrorMessage().replace("{value}", value));
-            } else {
-                this.sendUsage(sender, alias);
-            }
-        }
-
-        return resolved;
-    }
-
     @SuppressWarnings("unchecked")
-    private <T> T[] resolveVarArgs(CommandSender sender, String alias, Class<T> paramType,
-                                   ArgumentType argType, Deque<String> args) {
+    private <T> T[] resolveVarArgs(Class<T> paramType, ArgumentResolver<?> resolver,
+                                   Deque<String> args) {
         T[] array = (T[]) Array.newInstance(Primitives.wrap(paramType), args.size());
 
         for (int i = 0; !args.isEmpty(); i++) {
-            array[i] = (T) this.callArgumentResolver(sender, alias, argType, args.pop());
+            array[i] = (T) resolver.resolve(args.getFirst());
 
             if (array[i] == null) {
                 return null;
             }
+
+            args.pop();
         }
 
         return array;
     }
 
     private String resolveRestToString(Deque<String> args) {
-        ArgumentType stringType = this.handler.getArgumentTypes().get(String.class);
         StringBuilder builder = new StringBuilder(args.pop());
 
         while (!args.isEmpty()) {
-            builder.append(" ").append(stringType.getResolver().resolve(args.pop()));
+            builder.append(" ").append(args.pop());
         }
 
         return builder.toString();
@@ -301,14 +288,27 @@ public class CroissantCommand extends Command implements PluginIdentifiableComma
                                    Deque<String> args) {
         Class<?> paramType = CroissantUtil.getParameterType(param);
         ArgumentType argType = this.getArgumentType(paramType);
+        ArgumentResolver<?> resolver = argType.getResolver();
         Object resolved;
 
         if (param.isVarArgs()) {
-            resolved = this.resolveVarArgs(sender, alias, paramType, argType, args);
+            resolved = this.resolveVarArgs(paramType, resolver, args);
         } else if (paramType == String.class && param.isAnnotationPresent(Rest.class)) {
             resolved = this.resolveRestToString(args);
         } else {
-            resolved = this.callArgumentResolver(sender, alias, argType, args.pop());
+            resolved = resolver.resolve(args.getFirst());
+        }
+
+        if (resolved == null) {
+            if (argType.getErrorMessage() == null) {
+                this.sendUsage(sender, alias);
+            } else {
+                sender.sendMessage(argType.getErrorMessage().replace("{value}", args.getFirst()));
+            }
+        }
+
+        if (!args.isEmpty()) {
+            args.pop();
         }
 
         return resolved;
