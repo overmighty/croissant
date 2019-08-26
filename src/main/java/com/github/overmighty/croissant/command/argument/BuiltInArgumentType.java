@@ -24,7 +24,9 @@ public enum BuiltInArgumentType {
      * <p>
      * Accepts exact usernames and UUIDs of online players, case-insensitively.
      * <p>
-     * Suggests matching usernames of online players for argument completion.
+     * Suggests matching usernames of online players for argument completion. If
+     * the command sender is a player, they will only be suggested usernames of
+     * online players that they can see (see {@link Player#canSee(Player)}).
      */
     PLAYER(
         Player.class,
