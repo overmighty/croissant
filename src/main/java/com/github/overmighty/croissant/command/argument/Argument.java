@@ -33,7 +33,7 @@ public class Argument {
      *
      * @return the parameter that represents the argument
      */
-    @SuppressWarnings("unused")
+    @SuppressWarnings("WeakerAccess")
     public Parameter getParameter() {
         return parameter;
     }

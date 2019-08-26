@@ -113,6 +113,43 @@ public enum BuiltInArgumentType {
         )
     ),
     /**
+     * Represents an {@link Enum}.
+     * <p>
+     * Accepts the name of the enum constants of the type of the parameter that
+     * represents the argument in the command's executor method.
+     * <p>
+     * Suggests matching enum constant names for argument completion.
+     */
+    @SuppressWarnings("unchecked")
+    ENUM(
+        Enum.class,
+        new ArgumentType((ArgumentResolver<Enum<?>>) argument -> {
+            Class<? extends Enum<?>> enumClass =
+                (Class<? extends Enum<?>>) CroissantUtil.getParameterType(argument.getParameter());
+
+            for (Enum<?> constant : enumClass.getEnumConstants()) {
+                if (argument.getValue().equals(constant.name())) {
+                    return constant;
+                }
+            }
+
+            return null;
+        }, argument -> {
+            Class<? extends Enum<?>> enumClass =
+                (Class<? extends Enum<?>>) CroissantUtil.getParameterType(argument.getParameter());
+            List<String> completions = new ArrayList<>();
+
+            for (Enum<?> constant : enumClass.getEnumConstants()) {
+                if (StringUtil.startsWithIgnoreCase(constant.name(), argument.getValue())) {
+                    completions.add(constant.name());
+                }
+            }
+
+            completions.sort(String.CASE_INSENSITIVE_ORDER);
+            return completions;
+        })
+    ),
+    /**
      * Represents a {@link Boolean}.
      * <p>
      * Accepts {@code true} and {@code false}, case-insensitively.
