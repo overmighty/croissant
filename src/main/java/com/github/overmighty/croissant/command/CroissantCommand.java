@@ -247,11 +247,17 @@ public class CroissantCommand extends Command implements PluginIdentifiableComma
     }
 
     private ArgumentType getArgumentType(Class<?> paramType) {
-        ArgumentType argType = this.handler.getArgumentTypes().get(Primitives.wrap(paramType));
+        Class<?> baseParamType = paramType;
+        ArgumentType argType;
+
+        do {
+            argType = this.handler.getArgumentTypes().get(Primitives.wrap(paramType));
+            paramType = paramType.getSuperclass();
+        } while (argType == null && paramType != null);
 
         if (argType == null) {
             throw new IllegalStateException("Command handler of command '" + super.getLabel() +
-                "' has no argument type bound to " + paramType);
+                "' has no argument type bound to " + baseParamType + " or any of its superclasses");
         }
 
         return argType;
