@@ -1,6 +1,7 @@
 package com.github.overmighty.croissant.command;
 
 import com.github.overmighty.croissant.Croissant;
+import com.github.overmighty.croissant.command.argument.Argument;
 import com.github.overmighty.croissant.command.argument.ArgumentCompleter;
 import com.github.overmighty.croissant.command.argument.ArgumentResolver;
 import com.github.overmighty.croissant.command.argument.ArgumentType;
@@ -257,12 +258,13 @@ public class CroissantCommand extends Command implements PluginIdentifiableComma
     }
 
     @SuppressWarnings("unchecked")
-    private <T> T[] resolveVarArgs(Class<T> paramType, ArgumentResolver<?> resolver,
-                                   Deque<String> args) {
+    private <T> T[] resolveVarArgs(Parameter param, Deque<String> args, CommandSender sender,
+                                   ArgumentResolver<?> resolver) {
+        Class<?> paramType = CroissantUtil.getParameterType(param);
         T[] array = (T[]) Array.newInstance(Primitives.wrap(paramType), args.size());
 
         for (int i = 0; !args.isEmpty(); i++) {
-            array[i] = (T) resolver.resolve(args.getFirst());
+            array[i] = (T) resolver.resolve(new Argument(param, args.getFirst(), sender));
 
             if (array[i] == null) {
                 return null;
@@ -292,11 +294,11 @@ public class CroissantCommand extends Command implements PluginIdentifiableComma
         Object resolved;
 
         if (param.isVarArgs()) {
-            resolved = this.resolveVarArgs(paramType, resolver, args);
+            resolved = this.resolveVarArgs(param, args, sender, resolver);
         } else if (paramType == String.class && param.isAnnotationPresent(Rest.class)) {
             resolved = this.resolveRestToString(args);
         } else {
-            resolved = resolver.resolve(args.getFirst());
+            resolved = resolver.resolve(new Argument(param, args.getFirst(), sender));
         }
 
         if (resolved == null) {
@@ -451,7 +453,7 @@ public class CroissantCommand extends Command implements PluginIdentifiableComma
             return Collections.emptyList();
         }
 
-        return completer.complete(args[args.length - 1], sender);
+        return completer.complete(new Argument(param, args[args.length - 1], sender));
     }
 
     /**

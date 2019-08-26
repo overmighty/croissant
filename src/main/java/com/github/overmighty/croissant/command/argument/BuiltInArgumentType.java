@@ -4,6 +4,7 @@ import com.github.overmighty.croissant.util.CroissantUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
@@ -27,13 +28,17 @@ public enum BuiltInArgumentType {
      */
     PLAYER(
         Player.class,
-        new ArgumentType((ArgumentResolver<Player>) value -> {
+        new ArgumentType((ArgumentResolver<Player>) argument -> {
+            String value = argument.getValue();
+
             if (CroissantUtil.getPlayerUUIDPattern().matcher(value).matches()) {
                 return Bukkit.getPlayer(UUID.fromString(value));
             }
 
             return Bukkit.getPlayerExact(value);
-        }, (value, sender) -> {
+        }, argument -> {
+            String value = argument.getValue();
+            CommandSender sender = argument.getSender();
             List<String> completions = new ArrayList<>();
 
             for (Player player : Bukkit.getOnlinePlayers()) {
@@ -59,7 +64,9 @@ public enum BuiltInArgumentType {
      */
     OFFLINE_PLAYER(
         OfflinePlayer.class,
-        new ArgumentType((ArgumentResolver<OfflinePlayer>) value -> {
+        new ArgumentType((ArgumentResolver<OfflinePlayer>) argument -> {
+            String value = argument.getValue();
+
             if (CroissantUtil.getPlayerUUIDPattern().matcher(value).matches()) {
                 return Bukkit.getOfflinePlayer(UUID.fromString(value));
             }
@@ -77,12 +84,12 @@ public enum BuiltInArgumentType {
     WORLD(
         World.class,
         new ArgumentType(
-            (ArgumentResolver<World>) Bukkit::getWorld,
-            (value, sender) -> {
+            (ArgumentResolver<World>) argument -> Bukkit.getWorld(argument.getValue()),
+            argument -> {
                 List<String> completions = new ArrayList<>();
 
                 for (World world : Bukkit.getWorlds()) {
-                    if (StringUtil.startsWithIgnoreCase(world.getName(), value)) {
+                    if (StringUtil.startsWithIgnoreCase(world.getName(), argument.getValue())) {
                         completions.add(world.getName());
                     }
                 }
@@ -101,7 +108,7 @@ public enum BuiltInArgumentType {
     STRING(
         String.class,
         new ArgumentType(
-            (ArgumentResolver<String>) value -> value,
+            (ArgumentResolver<String>) Argument::getValue,
             PLAYER.getArgumentType().getCompleter()
         )
     ),
@@ -114,18 +121,18 @@ public enum BuiltInArgumentType {
      */
     BOOLEAN(
         Boolean.class,
-        new ArgumentType((ArgumentResolver<Boolean>) value -> {
-            if (value.equalsIgnoreCase("true")) {
+        new ArgumentType((ArgumentResolver<Boolean>) argument -> {
+            if (argument.getValue().equalsIgnoreCase("true")) {
                 return true;
             }
 
-            if (value.equalsIgnoreCase("false")) {
+            if (argument.getValue().equalsIgnoreCase("false")) {
                 return false;
             }
 
             return null;
-        }, (value, sender) -> {
-            value = value.toLowerCase();
+        }, argument -> {
+            String value = argument.getValue().toLowerCase();
 
             if (value.equals("")) {
                 return Arrays.asList("true", "false");
@@ -151,9 +158,9 @@ public enum BuiltInArgumentType {
      */
     BYTE(
         Byte.class,
-        new ArgumentType((ArgumentResolver<Byte>) value -> {
+        new ArgumentType((ArgumentResolver<Byte>) argument -> {
             try {
-                return Byte.parseByte(value);
+                return Byte.parseByte(argument.getValue());
             } catch (NumberFormatException e) {
                 return null;
             }
@@ -168,9 +175,9 @@ public enum BuiltInArgumentType {
      */
     SHORT(
         Short.class,
-        new ArgumentType((ArgumentResolver<Short>) value -> {
+        new ArgumentType((ArgumentResolver<Short>) argument -> {
             try {
-                return Short.parseShort(value);
+                return Short.parseShort(argument.getValue());
             } catch (NumberFormatException e) {
                 return null;
             }
@@ -185,9 +192,9 @@ public enum BuiltInArgumentType {
      */
     INTEGER(
         Integer.class,
-        new ArgumentType((ArgumentResolver<Integer>) value -> {
+        new ArgumentType((ArgumentResolver<Integer>) argument -> {
             try {
-                return Integer.parseInt(value);
+                return Integer.parseInt(argument.getValue());
             } catch (NumberFormatException e) {
                 return null;
             }
@@ -202,9 +209,9 @@ public enum BuiltInArgumentType {
      */
     LONG(
         Long.class,
-        new ArgumentType((ArgumentResolver<Long>) value -> {
+        new ArgumentType((ArgumentResolver<Long>) argument -> {
             try {
-                return Long.parseLong(value);
+                return Long.parseLong(argument.getValue());
             } catch (NumberFormatException e) {
                 return null;
             }
@@ -219,9 +226,9 @@ public enum BuiltInArgumentType {
      */
     FLOAT(
         Float.class,
-        new ArgumentType((ArgumentResolver<Float>) value -> {
+        new ArgumentType((ArgumentResolver<Float>) argument -> {
             try {
-                return Float.parseFloat(value);
+                return Float.parseFloat(argument.getValue());
             } catch (NumberFormatException e) {
                 return null;
             }
@@ -236,9 +243,9 @@ public enum BuiltInArgumentType {
      */
     DOUBLE(
         Double.class,
-        new ArgumentType((ArgumentResolver<Double>) value -> {
+        new ArgumentType((ArgumentResolver<Double>) argument -> {
             try {
-                return Double.parseDouble(value);
+                return Double.parseDouble(argument.getValue());
             } catch (NumberFormatException e) {
                 return null;
             }

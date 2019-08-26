@@ -12,10 +12,10 @@ public interface ArgumentResolver<T> {
     /**
      * Resolves a raw command argument.
      *
-     * @param value the value of the argument to resolve
+     * @param argument the argument to resolve
      * @return the resolved argument, or {@code null} if it could not be
      *         resolved
      */
-    T resolve(String value);
+    T resolve(Argument argument);
 
 }

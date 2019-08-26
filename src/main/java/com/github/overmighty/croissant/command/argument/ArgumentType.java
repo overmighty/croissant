@@ -9,8 +9,7 @@ import java.util.Collections;
  */
 public class ArgumentType {
 
-    private static final ArgumentCompleter DEFAULT_COMPLETER =
-        (value, sender) -> Collections.emptyList();
+    private static final ArgumentCompleter DEFAULT_COMPLETER = argument -> Collections.emptyList();
 
     private final ArgumentResolver<?> resolver;
     private final ArgumentCompleter completer;
