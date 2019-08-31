@@ -33,11 +33,11 @@ public class GUIHandler implements Listener {
 
         GUI gui = (GUI) inventory.getHolder();
 
-        if (gui.getUnhandledSlots().contains(event.getSlot())) {
+        if (gui.getIgnoredSlots().contains(event.getSlot())) {
             return;
         }
 
-        event.setCancelled(true); // Do not let players alter the contents of a handled slot
+        event.setCancelled(true); // Do not let players alter the contents of the slot
         Consumer<InventoryClickEvent> clickHandler = gui.getClickHandlers().get(event.getSlot());
 
         if (clickHandler != null) {
@@ -53,9 +53,9 @@ public class GUIHandler implements Listener {
 
         GUI gui = (GUI) event.getInventory().getHolder();
 
-        // If the event does not only involve unhandled slots of the GUI
-        if (!gui.getUnhandledSlots().containsAll(event.getInventorySlots())) {
-            // Do not let players alter the contents of handled slots of the GUI
+        // If the event does not only involve ignored slots of the GUI
+        if (!gui.getIgnoredSlots().containsAll(event.getInventorySlots())) {
+            // Do not let players alter the contents of the slots
             event.setCancelled(true);
         }
     }

@@ -18,10 +18,9 @@ import java.util.function.Consumer;
  * An interactive GUI, based on a fake chest inventory.
  * <p>
  * By default, players will not be able to change the contents of any slot. This
- * behavior can be disabled for some slots or ranges of slots using
- * {@link GUI#unhandleSlot(int)} and {@link GUI#unhandleSlots(int, int)}
- * respectively. It can also be re-enabled using {@link GUI#handleSlot(int)} and
- * {@link GUI#handleSlots(int, int)}.
+ * behavior can be disabled for some slots by adding their index to the
+ * {@link Set} returned by {@link GUI#getIgnoredSlots()}. It can also be
+ * re-enabled by removing the slots' index from the same {@link Set}.
  *
  * @see ScrollableGUI
  */
@@ -29,7 +28,7 @@ import java.util.function.Consumer;
 public class GUI implements InventoryHolder, Listener {
 
     private final Inventory inventory;
-    private final Set<Integer> unhandledSlots = new HashSet<>();
+    private final Set<Integer> ignoredSlots = new HashSet<>();
     private final Map<Integer, Consumer<InventoryClickEvent>> clickHandlers = new HashMap<>();
 
     /**
@@ -55,13 +54,14 @@ public class GUI implements InventoryHolder, Listener {
     }
 
     /**
-     * Returns the set of slots of the GUI's inventory that are not handled.
-     * Players are not restricted from changing those slots' contents.
+     * Returns the set of slots of the GUI's inventory that are ignored by the
+     * {@link GUIHandler}. Players are not restricted from changing the contents
+     * of these inventory slots.
      *
-     * @return the GUI's unhandled slots
+     * @return the GUI's ignored slots
      */
-    public Set<Integer> getUnhandledSlots() {
-        return unhandledSlots;
+    public Set<Integer> getIgnoredSlots() {
+        return ignoredSlots;
     }
 
     /**
@@ -84,61 +84,6 @@ public class GUI implements InventoryHolder, Listener {
         player.openInventory(this.inventory);
     }
 
-    /**
-     * Makes the {@link GUIHandler} stop handling {@link InventoryClickEvent}s
-     * and {@link org.bukkit.event.inventory.InventoryDragEvent}s that have to
-     * do with the specified slot. Useful if you want players to be able to take
-     * items from a slot, for example.
-     *
-     * @param slot the slot to stop handling
-     */
-    public void unhandleSlot(int slot) {
-        this.unhandledSlots.add(slot);
-    }
-
-    /**
-     * Makes the {@link GUIHandler} stop handling {@link InventoryClickEvent}s
-     * and {@link org.bukkit.event.inventory.InventoryDragEvent}s that have to
-     * do with slots included in the specified range. Useful if you want players
-     * to be able to take items from some slots, for example.
-     *
-     * @param start the start index of the range of slots to stop handling,
-     *              inclusive
-     * @param end   the end index of the range of slots to stop handling,
-     *              also inclusive
-     */
-    public void unhandleSlots(int start, int end) {
-        for (int i = start; i <= end; i++) {
-            this.unhandledSlots.add(i);
-        }
-    }
-
-    /**
-     * Makes the {@link GUIHandler} start handling {@link InventoryClickEvent}s
-     * and {@link org.bukkit.event.inventory.InventoryDragEvent}s that have to
-     * do with the specified slot again.
-     *
-     * @param slot the slot to start handling again
-     */
-    public void handleSlot(int slot) {
-        this.unhandledSlots.remove(slot);
-    }
-
-    /**
-     * Makes the {@link GUIHandler} start handling {@link InventoryClickEvent}s
-     * and {@link org.bukkit.event.inventory.InventoryDragEvent}s that have to
-     * do with slots included in the specified range again.
-     *
-     * @param start the start index of the range of slots to start handling
-     *              again, inclusive
-     * @param end   the end index of the range of slots to start handling again,
-     *              also inclusive
-     */
-    public void handleSlots(int start, int end) {
-        for (int i = start; i <= end; i++) {
-            this.unhandledSlots.remove(i);
-        }
-    }
 
     /**
      * Sets a button on the GUI in the given inventory slot.
