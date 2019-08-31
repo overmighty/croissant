@@ -65,7 +65,7 @@ public class CroissantCommand extends Command implements PluginIdentifiableComma
      * Constructs a new {@code CroissantCommand}. The command's executor method
      * will be automatically detected.
      *
-     * @param name the name of the command
+     * @param name the command's name
      */
     protected CroissantCommand(String name) {
         super(name);
@@ -213,10 +213,10 @@ public class CroissantCommand extends Command implements PluginIdentifiableComma
     }
 
     /**
-     * Returns the command's usage message, with the given command alias instead
-     * of {@code <command>}.
+     * Returns the command's usage message, with occurrences of the
+     * {@code <command>} macro replaced with the given alias.
      *
-     * @param alias the alias to replace {@code <command>} with
+     * @param alias the alias to replace the {@code <command>} macro with
      * @return the command's usage message
      */
     @SuppressWarnings("WeakerAccess")

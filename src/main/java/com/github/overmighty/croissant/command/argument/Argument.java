@@ -6,6 +6,10 @@ import java.lang.reflect.Parameter;
 
 /**
  * A command argument.
+ *
+ * @see ArgumentType
+ * @see ArgumentResolver
+ * @see ArgumentCompleter
  */
 public class Argument {
 

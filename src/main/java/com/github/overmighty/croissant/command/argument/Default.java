@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * default value.
  *
  * @see Optional
- * @see com.github.overmighty.croissant.command.CroissantCommand
+ * @see com.github.overmighty.croissant.command.CommandExecutor
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)

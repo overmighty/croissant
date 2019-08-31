@@ -3,7 +3,7 @@ package com.github.overmighty.croissant.command.argument;
 import java.util.Collections;
 
 /**
- * A type of command arguments.
+ * A type of command argument.
  *
  * @see com.github.overmighty.croissant.command.CroissantCommand
  */
@@ -57,8 +57,9 @@ public class ArgumentType {
     }
 
     /**
-     * Returns the type's error message to send to command senders when an
-     * argument could not be resolved, instead of the command's usage message.
+     * Returns the error message to send to the command sender when an argument
+     * of this type could not be resolved, instead of the command's usage
+     * message.
      *
      * @return the type's error message; can be {@code null}
      */
@@ -67,8 +68,8 @@ public class ArgumentType {
     }
 
     /**
-     * Sets the type's error message to send to command senders when an argument
-     * could not be resolved, instead of the command's usage message.
+     * Sets the error message to send to the command sender when an argument of
+     * this type could not be resolved, instead of the command's usage message.
      * <p>
      * By default, this is set to {@code null} and the command's usage message
      * is sent to command senders when they provide an invalid argument.

@@ -34,9 +34,8 @@ public class GUI implements InventoryHolder, Listener {
     /**
      * Constructs a new {@code GUI}.
      *
-     * @param title the GUI's title
-     * @param rows  the amount of rows the fake chest inventory used for the GUI
-     *              should have
+     * @param title the title for the chest inventory used for the GUI
+     * @param rows  the amount of rows for the chest inventory used for the GUI
      */
     public GUI(String title, int rows) {
         this.inventory = Bukkit.createInventory(this, rows * 9, title);
@@ -86,9 +85,9 @@ public class GUI implements InventoryHolder, Listener {
 
 
     /**
-     * Sets a button on the GUI in the given inventory slot.
+     * Sets a button on the GUI.
      *
-     * @param slot    the slot in which to set the button
+     * @param slot    the index of the inventory slot in which to set the button
      * @param item    the item stack to use to display the button
      * @param handler the click handler for the button
      */
@@ -117,7 +116,7 @@ public class GUI implements InventoryHolder, Listener {
      * Removes the item stack in the given inventory slot and the click handler
      * for the same slot, from the GUI.
      *
-     * @param slot the slot of the button to remove
+     * @param slot the index of the inventory slot of the button to remove
      */
     public void removeButton(int slot) {
         this.inventory.clear(slot);

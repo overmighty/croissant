@@ -46,8 +46,8 @@ public class ScrollableGUI {
     }
 
     /**
-     * Returns the click handler that is called when one of the GUI's navigation
-     * buttons is clicked.
+     * Returns the click handler that is called whenever one of the GUI's
+     * navigation buttons is clicked.
      *
      * @return the GUI's scroll handler
      */
@@ -56,8 +56,8 @@ public class ScrollableGUI {
     }
 
     /**
-     * Sets the click handler to call when one of the GUI's navigation buttons
-     * is clicked.
+     * Sets the click handler to call whenever one of the GUI's navigation
+     * buttons is clicked.
      *
      * @param scrollHandler the GUI's scroll handler
      */
@@ -113,7 +113,7 @@ public class ScrollableGUI {
      * stack's display name will be replaced with the number of the page that
      * the button will take the player to.
      *
-     * @param slot the slot of each page in which to set the button
+     * @param slot the index of the inventory slot in which to set the button
      * @param item the item stack to use to display the button
      * @param type the type of navigation button to set
      */

@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  * all remaining arguments provided by the command sender should be joined into
  * a {@link String} using spaces to form a last command argument.
  *
- * @see com.github.overmighty.croissant.command.CroissantCommand
+ * @see com.github.overmighty.croissant.command.CommandExecutor
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)

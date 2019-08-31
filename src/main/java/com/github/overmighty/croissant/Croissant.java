@@ -3,7 +3,9 @@ package com.github.overmighty.croissant;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * Provides methods for configuring the Croissant library.
+ * Provides methods for configuring the Croissant library. The library must be
+ * initialized by calling {@link Croissant#setPlugin(JavaPlugin)} before the
+ * Croissant command framework and the Croissant GUI framework can be used.
  */
 public class Croissant {
 
@@ -19,8 +21,8 @@ public class Croissant {
     }
 
     /**
-     * Sets the Bukkit {@link JavaPlugin} that is using the library. While the plugin is not set,
-     * the command framework and the GUI framework cannot function.
+     * Sets the Bukkit {@link JavaPlugin} that is using the library. Required to
+     * use the command framework and the GUI framework.
      *
      * @param plugin the plugin that is using the library
      */

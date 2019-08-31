@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
  * runtime exceptions.
  *
  * @see Default
- * @see com.github.overmighty.croissant.command.CroissantCommand
+ * @see com.github.overmighty.croissant.command.CommandExecutor
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)

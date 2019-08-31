@@ -20,12 +20,12 @@ import java.lang.annotation.Target;
  * the command's {@link CommandHandler} binds to the type of each one of those
  * parameters (see {@link CommandHandler#getArgumentTypes()}). If there is no
  * {@code ArgumentType} bound to the parameter's type, the framework will look
- * for an {@code ArgumentType} bound to one of the parameter's superclasses when
- * resolving or completing the argument represented by the parameter. If an
- * {@code ArgumentType} could still not be found, an exception will be thrown.
- * Be aware that when encountering a primitive data type, the framework will
- * look for an {@code ArgumentType} bound to the wrapper class for that type,
- * instead of looking for one bound to the primitive data type itself.
+ * for an {@code ArgumentType} bound to one of the superclasses of the parameter's
+ * type when resolving or completing the argument represented by the parameter.
+ * If an {@code ArgumentType} could still not be found, an exception will be
+ * thrown. Be aware that when encountering a primitive data type, the framework
+ * will look for an {@code ArgumentType} bound to the wrapper class for that
+ * type, instead of looking for one bound to the primitive data type itself.
  * <p>
  * By default, arguments are required, which means that if they are not provided
  * when calling the command, the command's usage message is sent to the command
@@ -38,7 +38,7 @@ import java.lang.annotation.Target;
  * provided by the command sender will be resolved into the varargs parameter's
  * component type and put into an array, which will be passed to the method.
  * However, the varargs parameter must not be of a primitive component type, or
- * runtime exceptions will occur when executing the command. If one of those
+ * exceptions will be thrown when executing the command. If one of those
  * types is wanted, the wrapper class for it, for example {@link Boolean} for
  * {@code boolean}, {@link Integer} for {@code int}, or {@link Double} for
  * {@code double}, must be used.

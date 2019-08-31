@@ -42,7 +42,12 @@ public class CommandHandler implements Listener {
 
     /**
      * Returns the command handler's argument types, mapped by the type of
-     * executor method parameters they are bound to.
+     * executor method parameters to which they are bound. New entries
+     * (class-{@code ArgumentType} pairs) can be put into the map to add support
+     * for more types of executor method parameters. Existing entries can be
+     * replaced, if a {@link BuiltInArgumentType} doesn't meet your needs for
+     * example, and they can also be deleted, in order to remove support for a
+     * parameter type.
      *
      * @return the command handler's argument types
      */

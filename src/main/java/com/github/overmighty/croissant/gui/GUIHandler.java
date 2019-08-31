@@ -16,7 +16,8 @@ import java.util.function.Consumer;
 public class GUIHandler implements Listener {
 
     /**
-     * Registers the Bukkit event listeners that allow {@link GUI}s to function.
+     * Registers the Bukkit event listeners that allow players to interact with
+     * GUIs.
      */
     @SuppressWarnings({ "WeakerAccess", "unused" })
     public static void registerEvents() {
