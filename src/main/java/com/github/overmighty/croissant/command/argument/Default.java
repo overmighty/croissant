@@ -6,8 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * A parameter of the executor method of a command class annotated with
- * {@code Default} indicates, except for the first parameter which must be the
+ * A command executor method parameter annotated with {@code Default} indicates,
+ * except for the first parameter which must be the
  * {@link org.bukkit.command.CommandSender}, an optional command argument with a
  * default value.
  *

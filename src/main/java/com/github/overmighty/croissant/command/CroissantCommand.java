@@ -189,8 +189,8 @@ public class CroissantCommand extends Command implements PluginIdentifiableComma
     }
 
     /**
-     * Returns the command's parent command: the command of which this command
-     * is a subcommand.
+     * Returns the command's parent command: the command of which it is a
+     * subcommand.
      *
      * @return the command's parent command, or {@code null} if the command is
      *         not the subcommand of any command

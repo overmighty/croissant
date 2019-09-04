@@ -74,8 +74,7 @@ public class GUI implements InventoryHolder, Listener {
     }
 
     /**
-     * Opens the GUI to the given player. The GUI can be opened to multiple
-     * players at the same time.
+     * Opens the GUI to the given player.
      *
      * @param player the player to open the GUI to
      */
