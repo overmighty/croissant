@@ -143,7 +143,7 @@ public class CommandHandler implements Listener {
      *
      * @param command the command to register
      */
-    @SuppressWarnings({ "WeakerAccess", "unused" })
+    @SuppressWarnings({ "unused", "WeakerAccess" })
     public void registerCommand(CroissantCommand command) {
         ServerUtil.getCommandMap().register(Croissant.getPlugin().getName(), command);
         command.setHandler(this);

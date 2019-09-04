@@ -19,7 +19,7 @@ public class GUIHandler implements Listener {
      * Registers the Bukkit event listeners that allow players to interact with
      * GUIs.
      */
-    @SuppressWarnings({ "WeakerAccess", "unused" })
+    @SuppressWarnings({ "unused", "WeakerAccess" })
     public static void registerEvents() {
         Bukkit.getPluginManager().registerEvents(new GUIHandler(), Croissant.getPlugin());
     }
