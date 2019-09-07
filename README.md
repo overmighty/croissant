@@ -3,6 +3,17 @@
     <blockquote>
         <p>🥐 Lightweight yet useful library for Bukkit/Spigot/Paper plugins.</p>
     </blockquote>
+    <p>
+        <a href="https://bintray.com/overmighty/maven/croissant">
+            <img alt="Bintray" src="https://img.shields.io/bintray/v/overmighty/maven/croissant">
+        </a>
+        <a href="https://search.maven.org/artifact/com.github.overmighty/croissant">
+            <img alt="Maven Central" src="https://img.shields.io/maven-central/v/com.github.overmighty/croissant">
+        </a>
+        <a href="https://discord.gg/u2UcCnY">
+            <img alt="Discord" src="https://discordapp.com/api/guilds/526906946209447939/embed.png">
+        </a>
+    </p>
 </div>
 
 ## Introduction
@@ -26,15 +37,52 @@ Here is a short summary of its features:
     - Supports both single-page GUIs and multi-page GUIs with navigation buttons
     (referred to as "scrollable GUIs")
 
-Croissant supports Bukkit/Spigot/Paper 1.8.x to 1.14.x.
+Croissant is currently written against the Paper 1.14.4 API, but supports
+Bukkit/Spigot/Paper 1.8.x to 1.14.x.
 
 ## Installation
 
-TO DO
+Releases of Croissant are published to a
+[Maven repository on Bintray](https://bintray.com/overmighty/maven/croissant),
+which is synced with JCenter and Maven Central.
+
+If your project is built with Maven or a supported build tool such as Gradle,
+you can easily add Croissant as a dependency for your project:
+
+#### Maven
+
+```xml
+<dependency>
+  <groupId>com.github.overmighty</groupId>
+  <artifactId>croissant</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+
+#### Gradle (Groovy DSL)
+
+```gradle
+repositories {
+    jcenter() // or mavenCentral()
+}
+
+dependencies {
+    implementation 'com.github.overmighty:croissant:1.0.0'
+}
+```
+
+[Example Gradle build script](https://github.com/OverMighty/croissant-example/blob/master/build.gradle)
 
 ## Usage
 
-TO DO
+The Croissant Javadoc can be browsed online [here](https://javadoc.io/doc/com.github.overmighty/croissant).
+
+You can also look at the [example Bukkit plugin](https://github.com/OverMighty/croissant-example)
+to get started with Croissant.
+
+## Support
+
+If you need help with Croissant, you can join my [Discord server](https://discord.gg/u2UcCnY).
 
 ## Building
 
