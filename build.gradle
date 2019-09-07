@@ -1,6 +1,8 @@
 plugins {
     id 'java-library'
     id 'jacoco'
+    id 'maven-publish'
+    id 'com.jfrog.bintray' version '1.8.4'
 }
 
 group 'com.github.overmighty'
@@ -36,5 +38,82 @@ jacocoTestReport {
         xml.enabled = false
         csv.enabled = false
         html.enabled = true
+    }
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    publications = ['maven']
+
+    pkg {
+        repo = 'maven'
+        name = project.name
+        desc = 'Lightweight yet useful library for Bukkit/Spigot/Paper plugins.'
+        websiteUrl = 'https://github.com/OverMighty/croissant'
+        issueTrackerUrl = 'https://github.com/OverMighty/croissant/issues'
+        vcsUrl = 'https://github.com/OverMighty/croissant.git'
+        githubRepo = 'OverMighty/croissant'
+        licenses = ['MIT']
+
+        version {
+            name = project.version
+
+            gpg {
+                sign = true
+            }
+
+            mavenCentralSync {
+                user = System.getenv('OSSRH_USER')
+                password = System.getenv('OSSRH_PASSWORD')
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    archiveClassifier = 'sources'
+}
+
+task javadocJar(type: Jar) {
+    from javadoc
+    archiveClassifier = 'javadoc'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            pom {
+                name = 'Croissant'
+                description = bintray.pkg.desc
+                url = bintray.pkg.websiteUrl
+
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://github.com/OverMighty/croissant/blob/master/LICENSE'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'OverMighty'
+                        email = 'its.overmighty@gmail.com'
+                        url = 'https://github.com/OverMighty'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git:git://github.com/OverMighty/croissant.git'
+                    developerConnection = 'scm:git:ssh://github.com:OverMighty/croissant.git'
+                    url = 'http://github.com/OverMighty/croissant/tree/master'
+                }
+            }
+        }
     }
 }
