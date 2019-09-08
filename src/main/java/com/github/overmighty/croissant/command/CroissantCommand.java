@@ -79,9 +79,12 @@ public class CroissantCommand extends Command implements PluginIdentifiableComma
     private void detectExecutorMethod() {
         for (Method method : this.getClass().getDeclaredMethods()) {
             if (method.isAnnotationPresent(CommandExecutor.class)) {
+                if (this.executor != null) {
+                    throw new IllegalStateException("Command has more than one executor method");
+                }
+
                 method.setAccessible(true);
                 this.executor = method;
-                break;
             }
         }
     }
