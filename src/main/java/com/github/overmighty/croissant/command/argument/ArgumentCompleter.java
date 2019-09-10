@@ -8,6 +8,7 @@ import java.util.List;
  *
  * @see ArgumentType
  */
+@FunctionalInterface
 public interface ArgumentCompleter {
 
     /**

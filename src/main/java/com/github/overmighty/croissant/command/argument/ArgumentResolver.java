@@ -7,6 +7,7 @@ package com.github.overmighty.croissant.command.argument;
  * @param <T> the type of objects to resolve raw command arguments into
  * @see ArgumentType
  */
+@FunctionalInterface
 public interface ArgumentResolver<T> {
 
     /**
