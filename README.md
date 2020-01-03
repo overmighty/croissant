@@ -101,6 +101,6 @@ $ ./gradlew clean build
 On Windows, the `gradlew.bat` batch script can be used instead of the `gradlew`
 POSIX shell script.
 
----
+## License
 
-This project is licensed under the MIT license.
+This project is licensed under the [MIT license](./LICENSE).
