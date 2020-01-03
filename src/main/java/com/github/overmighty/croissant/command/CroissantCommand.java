@@ -250,17 +250,17 @@ public class CroissantCommand extends Command implements PluginIdentifiableComma
     }
 
     private ArgumentType getArgumentType(Class<?> paramType) {
-        Class<?> baseParamType = paramType;
+        Class<?> superParamType = paramType;
         ArgumentType argType;
 
         do {
-            argType = this.handler.getArgumentTypes().get(Primitives.wrap(paramType));
-            paramType = paramType.getSuperclass();
-        } while (argType == null && paramType != null);
+            argType = this.handler.getArgumentTypes().get(Primitives.wrap(superParamType));
+            superParamType = superParamType.getSuperclass();
+        } while (argType == null && superParamType != null);
 
         if (argType == null) {
             throw new IllegalStateException("Command handler of command '" + super.getLabel() +
-                "' has no argument type bound to " + baseParamType + " or any of its superclasses");
+                "' has no argument type bound to " + paramType + " or any of its superclasses");
         }
 
         return argType;
@@ -458,7 +458,7 @@ public class CroissantCommand extends Command implements PluginIdentifiableComma
         ArgumentCompleter playerCompleter = BuiltInArgumentType.PLAYER
             .getArgumentType().getCompleter();
 
-        if (completer == playerCompleter && !this.handler.isPlayerCompleterEnabled()) {
+        if (completer.equals(playerCompleter) && !this.handler.isPlayerCompleterEnabled()) {
             return Collections.emptyList();
         }
 

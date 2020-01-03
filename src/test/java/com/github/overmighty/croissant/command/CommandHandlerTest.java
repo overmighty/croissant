@@ -20,6 +20,8 @@ class CommandHandlerTest extends TestCommand {
 
     @CommandExecutor
     void run(CommandSender sender, Player player, String string, boolean bool) {
+        // Empty executor method body because we're testing command handler
+        // settings that alter tab-completion only and not argument parsing
     }
 
     @ParameterizedTest(name = "Test CommandHandler.setPlayerCompleterEnabled(boolean) ({index}/6)")

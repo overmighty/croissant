@@ -38,7 +38,8 @@ public class GUIHandler implements Listener {
             return;
         }
 
-        event.setCancelled(true); // Do not let players alter the contents of the slot
+        // Do not let players alter the contents of the slot
+        event.setCancelled(true);
         Consumer<InventoryClickEvent> clickHandler = gui.getClickHandlers().get(event.getSlot());
 
         if (clickHandler != null) {

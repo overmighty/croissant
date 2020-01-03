@@ -173,7 +173,7 @@ public enum BuiltInArgumentType {
         }, argument -> {
             String value = argument.getValue().toLowerCase();
 
-            if (value.equals("")) {
+            if ("".equals(value)) {
                 return Arrays.asList("true", "false");
             }
 
