@@ -37,8 +37,8 @@ Here is a short summary of its features:
     - Supports both single-page GUIs and multi-page GUIs with navigation buttons
     (referred to as "scrollable GUIs")
 
-Croissant is currently written against the Paper 1.14.4 API, but supports
-Bukkit/Spigot/Paper 1.8.x to 1.14.x.
+Croissant is currently written against the Paper 1.15.1 API, but supports
+Bukkit/Spigot/Paper 1.8.x to 1.15.x.
 
 ## Installation
 
