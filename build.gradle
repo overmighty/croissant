@@ -16,13 +16,13 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.destroystokyo.paper:paper-api:1.14.4-R0.1-SNAPSHOT'
+    implementation 'com.destroystokyo.paper:paper-api:1.15.1-R0.1-SNAPSHOT'
 
-    testImplementation 'org.mockito:mockito-core:3.0.0'
+    testImplementation 'org.mockito:mockito-core:3.2.4'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.1'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.5.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.5.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
 }
 
 test {
