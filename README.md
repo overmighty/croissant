@@ -55,7 +55,7 @@ you can easily add Croissant as a dependency for your project:
 <dependency>
   <groupId>com.github.overmighty</groupId>
   <artifactId>croissant</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 </dependency>
 ```
 
@@ -67,7 +67,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.overmighty:croissant:1.0.0'
+    implementation 'com.github.overmighty:croissant:1.0.1'
 }
 ```
 
