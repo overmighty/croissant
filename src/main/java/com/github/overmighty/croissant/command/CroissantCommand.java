@@ -336,7 +336,7 @@ public class CroissantCommand extends Command implements PluginIdentifiableComma
 
             if (args.isEmpty()) {
                 if (param.isAnnotationPresent(Optional.class)) {
-                    continue;
+                    break;
                 } else if (param.isAnnotationPresent(Default.class)) {
                     args.push(param.getAnnotation(Default.class).value());
                 }
