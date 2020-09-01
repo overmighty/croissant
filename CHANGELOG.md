@@ -1,3 +1,10 @@
+# 1.0.2
+
+### Fixes
+
+* **command:** stop argument parsing on non-provided optional argument
+([180d6b8](https://github.com/OverMighty/croissant/commit/180d6b8e8cfd17a45ecd7db232f4bae89cd0c150))
+
 # 1.0.1
 
 ### Fixes
